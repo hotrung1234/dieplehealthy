@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diệp Lê Healthy Food</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        header {
+            background-color: #4CAF50;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #ffeb3b;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #ffeb3b;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1540914124281-342587941389?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+        
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #388E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #4CAF50;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #4CAF50;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .product-info p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .price {
+            font-weight: 700;
+            color: #4CAF50;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .about {
+            background-color: #f1f8e9;
+        }
+        
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 1s ease;
+        }
+        
+        .about-img.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-img img {
+            width: 100%;
+            display: block;
+        }
+        
+        .about-content {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 1s ease;
+        }
+        
+        .about-content.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .about-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .testimonials {
+            background-color: white;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-slide {
+            text-align: center;
+            padding: 20px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .testimonial-slide img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid #4CAF50;
+        }
+        
+        .testimonial-slide p {
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .testimonial-slide h4 {
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-slide span {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+            background-color: #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background-color: #4CAF50;
+        }
+        
+        .contact {
+            background-color: #f1f8e9;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #388E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .footer-col p, .footer-col li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #4CAF50;
+            padding-left: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            background-color: white;
+            color: #4CAF50;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            nav ul li {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+        }
+        
+        /* Floating Button */
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .floating-cart:hover {
+            background-color: #388E3C;
+            transform: scale(1.1);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff5722;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container nav-container">
+            <div class="logo">Diệp Lê <span>Healthy Food</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Trang Chủ</a></li>
+                    <li><a href="#products">Sản Phẩm</a></li>
+                    <li><a href="#about">Về Chúng Tôi</a></li>
+                    <li><a href="#testimonials">Đánh Giá</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Thực Phẩm Lành Mạnh Cho Cuộc Sống Khỏe Mạnh</h1>
+            <p>Chúng tôi cung cấp những sản phẩm hữu cơ tươi ngon và lành mạnh, được chọn lọc từ những nhà cung cấp uy tín, đảm bảo chất lượng cho sức khỏe của bạn và gia đình.</p>
+            <div class="button-group" style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <a href="#products" class="btn">Khám Phá Ngay</a>
+                <a href="tomtat.docx" class="btn" style="background-color: #2196F3;" download>diệp bấm zô đây xem nghiên cứu thị trường</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="products" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sản Phẩm Nổi Bật</h2>
+            </div>
+            <div class="products">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1607532941433-304659e8198a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Salad Bowl">
+                    </div>
+                    <div class="product-info">
+                        <h3>Salad Bowl Hữu Cơ</h3>
+                        <p>Salad tươi ngon với rau củ hữu cơ và sốt đặc biệt từ Diệp Lê.</p>
+                        <div class="price">75.000đ</div>
+                        <a href="#" class="btn">Đặt Hàng</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1604497181015-76590d828449?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Smoothie Bowl">
+                    </div>
+                    <div class="product-info">
+                        <h3>Smoothie Bowl</h3>
+                        <p>Smoothie bowl mát lạnh với trái cây tươi và hạt dinh dưỡng.</p>
+                        <div class="price">85.000đ</div>
+                        <a href="#" class="btn">Đặt Hàng</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1525385133512-2f3bdd039054?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Nước Detox">
+                    </div>
+                    <div class="product-info">
+                        <h3>Nước Detox</h3>
+                        <p>Nước detox giải độc cơ thể, thúc đẩy trao đổi chất và hỗ trợ giảm cân.</p>
+                        <div class="price">45.000đ</div>
+                        <a href="#" class="btn">Đặt Hàng</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1505252585461-04db1eb84625?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80" alt="Hạt Dinh Dưỡng">
+                    </div>
+                    <div class="product-info">
+                        <h3>Hạt Dinh Dưỡng Mix</h3>
+                        <p>Hỗn hợp các loại hạt dinh dưỡng tốt cho tim mạch và sức khỏe tổng thể.</p>
+                        <div class="price">120.000đ</div>
+                        <a href="#" class="btn">Đặt Hàng</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1603048719539-9ecb4aa395e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sandwich Healthy">
+                    </div>
+                    <div class="product-info">
+                        <h3>Sandwich Lành Mạnh</h3>
+                        <p>Sandwich với bánh mì nguyên cám, protein nạc và rau củ tươi ngon.</p>
+                        <div class="price">65.000đ</div>
+                        <a href="#" class="btn">Đặt Hàng</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Granola">
+                    </div>
+                    <div class="product-info">
+                        <h3>Granola Homemade</h3>
+                        <p>Granola tự làm với yến mạch, mật ong, hạt và trái cây khô.</p>
+                        <div class="price">95.000đ</div>
+                        <a href="#" class="btn">Đặt Hàng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="about-container">
+                <div class="about-img">
+                    <img src="4f4b3e18-a9d8-4a27-98b8-2320407fb406.png" alt="About Diệp Lê">
+                </div>
+                <div class="about-content">
+                    <h2>Câu Chuyện Của Chúng Tôi</h2>
+                    <p>Diệp Lê Healthy Food được thành lập từ năm 2025 với mục tiêu mang đến những bữa ăn lành mạnh, dinh dưỡng và ngon miệng cho mọi người.</p>
+                    <p>Chúng tôi tin rằng thực phẩm lành mạnh không chỉ tốt cho sức khỏe mà còn phải ngon miệng. Đội ngũ đầu bếp giàu kinh nghiệm của chúng tôi luôn tìm tòi và sáng tạo những công thức mới, kết hợp giữa hương vị truyền thống và xu hướng ẩm thực hiện đại.</p>
+                    <p>Tất cả nguyên liệu được chúng tôi lựa chọn kỹ lưỡng từ những trang trại hữu cơ uy tín, đảm bảo chất lượng và an toàn cho sức khỏe của khách hàng.</p>
+                    <a href="#contact" class="btn">Liên Hệ Ngay</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Khách Hàng Nói Gì</h2>
+            </div>
+            <div class="testimonial-container">
+                <div class="testimonial-slide active">
+                    <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Testimonial 1">
+                    <p>"Tôi đã thử rất nhiều sản phẩm của Diệp Lê và thực sự ấn tượng với chất lượng và hương vị. Salad bowl là món yêu thích của tôi, tươi ngon và đầy đủ dinh dưỡng!"</p>
+                    <h4>Nguyễn Thanh Hà</h4>
+                    <span>Khách hàng thường xuyên</span>
+                </div>
+                <div class="testimonial-slide">
+                    <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Testimonial 2">
+                    <p>"Diệp Lê Healthy Food đã thay đổi thói quen ăn uống của tôi. Giờ đây tôi đã biết rằng thực phẩm lành mạnh cũng có thể rất ngon miệng. Cảm ơn vì đã mang đến những bữa ăn ngon và bổ dưỡng!"</p>
+                    <h4>Trần Minh Đức</h4>
+                    <span>Huấn luyện viên thể hình</span>
+                </div>
+                <div class="testimonial-slide">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Testimonial 3">
+                    <p>"Tôi rất bận rộn với công việc và Diệp Lê Healthy Food đã giúp tôi tiết kiệm thời gian chuẩn bị bữa ăn mà vẫn đảm bảo dinh dưỡng. Dịch vụ giao hàng nhanh chóng và thái độ nhân viên rất chuyên nghiệp!"</p>
+                    <h4>Lê Thị Mai Anh</h4>
+                    <span>Nhân viên văn phòng</span>
+                </div>
+                <div class="dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Liên Hệ Với Chúng Tôi</h2>
+            </div>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Họ và Tên</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số Điện Thoại</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Tin Nhắn</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">Gửi Tin Nhắn</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Diệp Lê Healthy Food</h3>
+                    <p>Mang đến những bữa ăn lành mạnh, dinh dưỡng và ngon miệng cho cuộc sống khỏe mạnh của bạn.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Liên Kết Nhanh</h3>
+                    <ul>
+                        <li><a href="#home">Trang Chủ</a></li>
+                        <li><a href="#products">Sản Phẩm</a></li>
+                        <li><a href="#about">Về Chúng Tôi</a></li>
+                        <li><a href="#testimonials">Đánh Giá</a></li>
+                        <li><a href="#contact">Liên Hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Liên Hệ</h3>
+                    <p>107 Huỳnh Ngọc Huệ, Đà Nẵng</p>
+                    <p>Email: 000</p>
+                    <p>Phone: 0905575280</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Giờ Mở Cửa</h3>
+                    <p>Thứ Hai - Thứ Sáu: 7:00 - 21:00</p>
+                    <p>Thứ Bảy - Chủ Nhật: 8:00 - 22:00</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Diệp Lê Healthy Food. All Rights Reserved.</p>
+            </div>
+        </div>
+        </footer>
+
+   <div class="floating-cart">
+       <i class="fas fa-shopping-cart"></i>
+       <span class="cart-count">0</span>
+   </div>
+
+   <!-- Font Awesome -->
+   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   
+   <script>
+       // Hiệu ứng Header khi cuộn
+       window.addEventListener('scroll', function() {
+           const header = document.getElementById('header');
+           if (window.scrollY > 50) {
+               header.classList.add('scrolled');
+           } else {
+               header.classList.remove('scrolled');
+           }
+       });
+
+       // Hiệu ứng hiển thị các phần tử khi cuộn
+       window.addEventListener('load', function() {
+           // Hiệu ứng cho Hero Section
+           setTimeout(function() {
+               document.querySelector('.hero-content').classList.add('visible');
+           }, 500);
+           
+           // Hiệu ứng cho các phần khác khi cuộn
+           animateOnScroll();
+           window.addEventListener('scroll', animateOnScroll);
+       });
+
+       function animateOnScroll() {
+           // Sản phẩm
+           const productCards = document.querySelectorAll('.product-card');
+           productCards.forEach(card => {
+               if (isElementInViewport(card)) {
+                   setTimeout(() => {
+                       card.classList.add('visible');
+                   }, 200 * Array.from(productCards).indexOf(card));
+               }
+           });
+           
+           // About section
+           const aboutImg = document.querySelector('.about-img');
+           const aboutContent = document.querySelector('.about-content');
+           
+           if (isElementInViewport(aboutImg)) {
+               aboutImg.classList.add('visible');
+           }
+           
+           if (isElementInViewport(aboutContent)) {
+               aboutContent.classList.add('visible');
+           }
+       }
+
+       function isElementInViewport(el) {
+           const rect = el.getBoundingClientRect();
+           return (
+               rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+               rect.bottom >= 0
+           );
+       }
+
+       // Slider cho Testimonials
+       let slideIndex = 1;
+       showSlides(slideIndex);
+
+       function plusSlides(n) {
+           showSlides(slideIndex += n);
+       }
+
+       function currentSlide(n) {
+           showSlides(slideIndex = n);
+       }
+
+       function showSlides(n) {
+           let i;
+           let slides = document.getElementsByClassName("testimonial-slide");
+           let dots = document.getElementsByClassName("dot");
+           
+           if (n > slides.length) {slideIndex = 1}    
+           if (n < 1) {slideIndex = slides.length}
+           
+           for (i = 0; i < slides.length; i++) {
+               slides[i].classList.remove("active");  
+           }
+           
+           for (i = 0; i < dots.length; i++) {
+               dots[i].classList.remove("active");
+           }
+           
+           slides[slideIndex-1].classList.add("active");  
+           dots[slideIndex-1].classList.add("active");
+           
+           // Tự động chuyển slide sau 5 giây
+           setTimeout(function() {
+               plusSlides(1);
+           }, 5000);
+       }
+
+       // Hiệu ứng cho floating cart
+       const floatingCart = document.querySelector('.floating-cart');
+       let cartCount = 0;
+       
+       document.querySelectorAll('.btn').forEach(btn => {
+           if (btn.textContent === 'Đặt Hàng') {
+               btn.addEventListener('click', function(e) {
+                   e.preventDefault();
+                   cartCount++;
+                   document.querySelector('.cart-count').textContent = cartCount;
+                   
+                   // Hiệu ứng khi thêm vào giỏ hàng
+                   floatingCart.classList.add('adding');
+                   setTimeout(() => {
+                       floatingCart.classList.remove('adding');
+                   }, 300);
+                   
+                   // Hiệu ứng thông báo sản phẩm đã thêm vào giỏ hàng
+                   const productName = this.closest('.product-info').querySelector('h3').textContent;
+                   showNotification(`Đã thêm ${productName} vào giỏ hàng!`);
+               });
+           }
+       });
+       
+       // Hiệu ứng khi click vào giỏ hàng
+       floatingCart.addEventListener('click', function() {
+           if (cartCount > 0) {
+               showCart();
+           } else {
+               showNotification('Giỏ hàng của bạn đang trống!');
+           }
+       });
+       
+       // Hiển thị thông báo
+       function showNotification(message) {
+           const notification = document.createElement('div');
+           notification.className = 'notification';
+           notification.textContent = message;
+           
+           // Style cho notification
+           notification.style.position = 'fixed';
+           notification.style.bottom = '100px';
+           notification.style.right = '30px';
+           notification.style.backgroundColor = '#4CAF50';
+           notification.style.color = 'white';
+           notification.style.padding = '12px 20px';
+           notification.style.borderRadius = '5px';
+           notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+           notification.style.zIndex = '1000';
+           notification.style.opacity = '0';
+           notification.style.transform = 'translateY(20px)';
+           notification.style.transition = 'all 0.3s ease';
+           
+           document.body.appendChild(notification);
+           
+           // Hiển thị thông báo
+           setTimeout(() => {
+               notification.style.opacity = '1';
+               notification.style.transform = 'translateY(0)';
+           }, 10);
+           
+           // Ẩn thông báo sau 3 giây
+           setTimeout(() => {
+               notification.style.opacity = '0';
+               notification.style.transform = 'translateY(20px)';
+               
+               // Xóa thông báo khỏi DOM
+               setTimeout(() => {
+                   document.body.removeChild(notification);
+               }, 300);
+           }, 3000);
+       }
+       
+       // Hiển thị giỏ hàng
+       function showCart() {
+           // Tạo overlay cho giỏ hàng
+           const cartOverlay = document.createElement('div');
+           cartOverlay.className = 'cart-overlay';
+           
+           // Style cho overlay
+           cartOverlay.style.position = 'fixed';
+           cartOverlay.style.top = '0';
+           cartOverlay.style.left = '0';
+           cartOverlay.style.width = '100%';
+           cartOverlay.style.height = '100%';
+           cartOverlay.style.backgroundColor = 'rgba(0,0,0,0.7)';
+           cartOverlay.style.zIndex = '1000';
+           cartOverlay.style.display = 'flex';
+           cartOverlay.style.justifyContent = 'center';
+           cartOverlay.style.alignItems = 'center';
+           cartOverlay.style.opacity = '0';
+           cartOverlay.style.transition = 'opacity 0.3s ease';
+           
+           // Tạo nội dung giỏ hàng
+           const cartContent = document.createElement('div');
+           cartContent.className = 'cart-content';
+           
+           // Style cho cart content
+           cartContent.style.backgroundColor = 'white';
+           cartContent.style.borderRadius = '10px';
+           cartContent.style.padding = '30px';
+           cartContent.style.width = '80%';
+           cartContent.style.maxWidth = '600px';
+           cartContent.style.maxHeight = '80vh';
+           cartContent.style.overflowY = 'auto';
+           cartContent.style.transform = 'translateY(50px)';
+           cartContent.style.transition = 'transform 0.3s ease';
+           cartContent.style.position = 'relative';
+           
+           // Nội dung giỏ hàng
+           cartContent.innerHTML = `
+               <h2 style="color: #4CAF50; margin-bottom: 20px; font-family: 'Playfair Display', serif;">Giỏ Hàng Của Bạn</h2>
+               <p style="margin-bottom: 20px;">Bạn đã thêm ${cartCount} sản phẩm vào giỏ hàng.</p>
+               <button id="checkout-btn" style="background-color: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px;">Thanh Toán</button>
+               <button id="close-cart" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+           `;
+           
+           cartOverlay.appendChild(cartContent);
+           document.body.appendChild(cartOverlay);
+           
+           // Hiển thị giỏ hàng
+           setTimeout(() => {
+               cartOverlay.style.opacity = '1';
+               cartContent.style.transform = 'translateY(0)';
+           }, 10);
+           
+           // Đóng giỏ hàng khi click vào nút đóng
+           document.getElementById('close-cart').addEventListener('click', function() {
+               cartOverlay.style.opacity = '0';
+               cartContent.style.transform = 'translateY(50px)';
+               
+               // Xóa overlay khỏi DOM
+               setTimeout(() => {
+                   document.body.removeChild(cartOverlay);
+               }, 300);
+           });
+           
+           // Thanh toán
+           document.getElementById('checkout-btn').addEventListener('click', function() {
+               cartOverlay.style.opacity = '0';
+               cartContent.style.transform = 'translateY(50px)';
+               
+               // Xóa overlay khỏi DOM và hiển thị thông báo
+               setTimeout(() => {
+                   document.body.removeChild(cartOverlay);
+                   showNotification('Cảm ơn bạn đã đặt hàng! Chúng tôi sẽ liên hệ sớm.');
+                   // Reset giỏ hàng
+                   cartCount = 0;
+                   document.querySelector('.cart-count').textContent = cartCount;
+               }, 300);
+           });
+       }
+       
+       // Hiệu ứng smooth scroll cho menu
+       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+           anchor.addEventListener('click', function (e) {
+               e.preventDefault();
+               
+               const targetId = this.getAttribute('href');
+               const targetElement = document.querySelector(targetId);
+               
+               if (targetElement) {
+                   const headerHeight = document.getElementById('header').offsetHeight;
+                   const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                   
+                   window.scrollTo({
+                       top: targetPosition,
+                       behavior: 'smooth'
+                   });
+               }
+           });
+       });
+       
+       // Hiệu ứng Parallax cho Hero section
+       window.addEventListener('scroll', function() {
+           const hero = document.querySelector('.hero');
+           const scrollPosition = window.pageYOffset;
+           
+           hero.style.backgroundPosition = `center ${scrollPosition * 0.4}px`;
+       });
+       
+       // Form submission
+       const contactForm = document.querySelector('.contact-form');
+       contactForm.addEventListener('submit', function(e) {
+           e.preventDefault();
+           
+           const nameInput = document.getElementById('name');
+           const emailInput = document.getElementById('email');
+           const phoneInput = document.getElementById('phone');
+           const messageInput = document.getElementById('message');
+           
+           // Kiểm tra form
+           if (nameInput.value && emailInput.value && phoneInput.value && messageInput.value) {
+               // Reset form
+               contactForm.reset();
+               
+               // Hiển thị thông báo
+               showNotification('Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ phản hồi sớm nhất có thể!');
+           }
+       });
+       
+       // Hiệu ứng hover cho sản phẩm
+       const productCards = document.querySelectorAll('.product-card');
+       productCards.forEach(card => {
+           card.addEventListener('mouseenter', function() {
+               this.style.transform = 'translateY(-15px)';
+               this.style.boxShadow = '0 20px 30px rgba(0,0,0,0.2)';
+           });
+           
+           card.addEventListener('mouseleave', function() {
+               this.style.transform = '';
+               this.style.boxShadow = '';
+           });
+       });
+       
+       // Thêm hiệu ứng typing animation cho hero title
+       const heroTitle = document.querySelector('.hero h1');
+       const originalText = heroTitle.textContent;
+       heroTitle.textContent = '';
+       
+       let i = 0;
+       function typeWriter() {
+           if (i < originalText.length) {
+               heroTitle.textContent += originalText.charAt(i);
+               i++;
+               setTimeout(typeWriter, 50);
+           }
+       }
+       
+       // Bắt đầu hiệu ứng typing sau khi trang tải xong
+       window.addEventListener('load', function() {
+           setTimeout(typeWriter, 1000);
+       });
+   </script>
+</body>
+</html>
